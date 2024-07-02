@@ -1,0 +1,96 @@
+Last updated : 2-7-2024
+
+#include <Servo.h>
+
+Servo myServo;
+
+int const potPin = A0;  //the pin that the potentiometer is attached
+int potVal;             //the analog potentiometer value
+int angle;              //the angle which the servo motor will move to
+const int lightSensorPin = A1;
+int lightValue = 0;
+
+const int TMP_Pin = A3;
+const int baselineTMP = 20.0;
+
+
+void setup() {
+  myServo.attach(9);
+
+  Serial.begin(2400);
+
+
+}
+
+
+void loop(){
+
+ /* potVal = analogRead(potPin);   //read potentiometer value from potPin (A0)
+  Serial.print("potVal : ");
+  Serial.print(potVal);*/
+
+  lightValue = analogRead(lightSensorPin) / 4;
+  Serial.println(lightValue);
+
+  //angle = map (lightValue, 0, 255, 0, 179); //use map command to change the scale of the values between the potentiometer and the servo motor  **
+
+  int TMPval = analogRead(TMP_Pin);
+  float voltage = (TMPval/1024.0) * 5.0;
+  float degTMP = (voltage - 0.5) * 100;
+  Serial.println(degTMP);
+
+
+  if (lightValue >= 200){
+    Serial.print("\t The day outside is very sunny \t");
+    myServo.write(179);
+    if (degTMP >= 20){
+      Serial.print(" and warm");
+    }else if (degTMP < 20 && degTMP > 15){
+      Serial.print(" and a little bit cold");
+    }else{
+      Serial.print(" and cold");
+    }
+
+  }else if (lightValue <= 199 && lightValue > 150){
+    Serial.print("\t The day outside is sunny \t");
+    myServo.write(130);
+    if (degTMP >= 20){
+      Serial.print(" and warm");
+    }else if (degTMP < 20 && degTMP > 15){
+      Serial.print(" and a little bit cold");
+    }else{
+      Serial.print(" and cold");
+    }
+  }else if (lightValue <= 149 && lightValue > 100){
+    Serial.print("\t The day outside is cloudy \t");
+    myServo.write(80);
+    if (degTMP >= 20){
+      Serial.print(" and warm");
+    }else if (degTMP < 20 && degTMP >= 15){
+      Serial.print(" and a little bit cold");
+    }else{
+      Serial.print(" and cold");
+    }
+  }else if (lightValue <= 99 && lightValue > 0){
+    Serial.print("\t The day outside is dark \t");
+    myServo.write(22);
+    if (degTMP >= 20){
+      Serial.print(" and warm");
+    }else if (degTMP < 20 && degTMP > 15){
+      Serial.print(" and a little bit cold");
+    }else{
+      Serial.print(" and cold");
+    }
+  }
+
+
+
+  //Serial.print(", angle: ");
+  //Serial.println(angle);
+
+  //myServo.write(angle);
+delay(5000);
+}
+
+
+//**The servo motor rotates 180 degrees while the potentiometer (which is our analog input) goes from 0 to 1023
