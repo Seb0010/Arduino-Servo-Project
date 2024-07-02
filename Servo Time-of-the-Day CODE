@@ -4,8 +4,7 @@ Last updated : 2-7-2024
 
 Servo myServo;
 
-int const potPin = A0;  //the pin that the potentiometer is attached
-int potVal;             //the analog potentiometer value
+
 int angle;              //the angle which the servo motor will move to
 const int lightSensorPin = A1;
 int lightValue = 0;
@@ -25,9 +24,7 @@ void setup() {
 
 void loop(){
 
- /* potVal = analogRead(potPin);   //read potentiometer value from potPin (A0)
-  Serial.print("potVal : ");
-  Serial.print(potVal);*/
+
 
   lightValue = analogRead(lightSensorPin) / 4;
   Serial.println(lightValue);
