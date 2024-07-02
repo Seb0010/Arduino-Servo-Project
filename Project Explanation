@@ -1,0 +1,14 @@
+In this project I am using an Arduino UNO R3 to make a device that shows the user how sunny or cloudy is outside. 
+According to the amount of light that shines on a phototransistor the Servo motor arrow will spin to a specific angle, and the arrow will land onto 4 options that are displayed on a cutout piece of paper.
+The 4 options are : 
+
+1.dark 
+2.cloudy 
+3.sunny 
+4.very sunny
+
+We need to calibrate the servo motor in order to have it land on the right option. For that we have to use the "map" command.
+By using this line of code : angle = map (lightValue, 0, 255, 0, 179);
+we can scale the input values from the phototransistor to match the range of values of the servo motor. By shinning light on the phototransistor little by little we can manually calibrate it.
+We need 4 servo angles for the 4 options. After finding these angles we can set the servo to spin onto one of the four options by using a simple if statement.
+
